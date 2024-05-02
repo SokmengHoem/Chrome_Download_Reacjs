@@ -12,9 +12,9 @@ type ItemDownload = {
   image: String;
 };
 
-const LayoutPage: React.FC<ItemDownload> = () => {
+const LayoutPage: React.FC = () => {
   const [data, setData] = useState<ItemDownload[]>(itemsList);
-  const [filteredItems, setFilteredItems] = useState<any[]>([]);
+  const [filteredItems, setFilteredItems] = useState<ItemDownload[]>([]);
 
   const handleSearch = (searchTerm: string) => {
     const filtered = data.filter(item =>
