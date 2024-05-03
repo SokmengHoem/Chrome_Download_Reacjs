@@ -7,7 +7,6 @@ type Props = {
   onSearch: (searchTerm: string) => void;
 }
 
-
 const NavBar = ({onSearch}:Props) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [header, setHeader] = useState<boolean>(false);
