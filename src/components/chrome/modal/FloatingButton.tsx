@@ -10,7 +10,7 @@ interface PropsType {
 export default function FloatingButton({ handleShowPopup , buttonIcon}: PropsType) {
   return (
     <button
-      className="bg-blue-600 w-12 py-2 rounded-xl flex justify-center items-center  hover:bg-blue-500 transition-all duration-150"
+      className="bg-blue-600 w-12 py-2 rounded-xl flex justify-center items-center absolute bottom-10 right-10 hover:bg-blue-500 transition-all duration-150"
       onClick={() => handleShowPopup(true)}
     >
       { buttonIcon ? (
