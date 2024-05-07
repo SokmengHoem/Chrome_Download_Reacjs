@@ -5,12 +5,13 @@ import { MdClear } from "react-icons/md";
 interface ItemProps {
     data: any[];
     onDelete: (title:string) => void;
-    onUpdate: (id:number, updateItems:number|string) => void;
+    onUpdate: (id:number, updateItems:any) => void;
 }
 
 const Cart: React.FC<ItemProps> = ({ data ,onDelete, onUpdate}: ItemProps) => {
     const [isOpenModal, setIsModalOpen] = useState<boolean>(false)
     const [title, setTitle] = useState<string>("")
+    const [borderColor, setBorderColor] = useState<string>('');
 
     const handleShowConfirm = () => {
         setIsModalOpen(true);
@@ -23,9 +24,8 @@ const Cart: React.FC<ItemProps> = ({ data ,onDelete, onUpdate}: ItemProps) => {
     }
 
     const handleUpdate = (id:number, updateItems:number|string) => {
-        console.log(id)
-        console.log(updateItems)
-        //onUpdate(id, updateItems)
+        setBorderColor('border-blue-700 ');
+        onUpdate(id, updateItems)
     }
 
     return (
@@ -34,7 +34,7 @@ const Cart: React.FC<ItemProps> = ({ data ,onDelete, onUpdate}: ItemProps) => {
                 return (
                     <div className="w-[48%] mx-auto flex flex-col gap-3" key={item.id}>
                         <h1 className="mt-5">{item.downloadDate}</h1>
-                        <div className="w-full flex justify-between border-2 rounded-xl shadow-md" onClick={()=>handleUpdate(item.id,item)}>
+                        <div className={`w-full flex justify-between border-2 rounded-xl shadow-md ${borderColor}`} onClick={()=>handleUpdate(item.id,item)}>
                             <div className="w-[15%] border-r-2 flex justify-center items-center">
                                 {item.image && typeof item.image === 'string' && // Check if item.image exists and is a string
                                     <img src={item.image} alt="Uploaded" className="w-14 h-14" />

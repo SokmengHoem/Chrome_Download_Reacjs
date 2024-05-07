@@ -10,13 +10,17 @@ import ReactHookZodForm from "./components/formHandler/ReactHookZodForm";
 import TestForm from "./components/formHandler/TestForm";
 import FormHook from "./components/formHandler/FormHook";
 import UploadImage from "./components/UploadImage";
+import CrudChrome from "./components/designChromDownload/CrudChrome";
+import DragDrop from "./components/kanBanBoard/DragDrop";
+import MyComponent from "./components/MyComponent";
+import HomePage from "./components/chrome/HomePage";
 
 export default function App() {
   return (
     //  <Listing/>
     // <Parent/>
     //<ArrayState/>
-    <LayoutPage />
+    //<LayoutPage />
     // <GroupRelate id={0} name={""} age={0}/>
     // <Test/>
    // <SignUpForm/>
@@ -24,5 +28,9 @@ export default function App() {
     //<TestForm/>
     //<FormHook/>
     //<UploadImage/>
+  // <CrudChrome/>
+   //<DragDrop/>
+   //<MyComponent/>
+   <HomePage/>
   )
 }

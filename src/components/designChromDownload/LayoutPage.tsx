@@ -11,7 +11,7 @@ type ItemDownload = {
   downloadDate: String;
   filename: String;
   creator: String;
-  image: String| null;
+  image?: String;
 };  
 
 const LayoutPage: React.FC = () => {
@@ -19,8 +19,9 @@ const LayoutPage: React.FC = () => {
   const [date, setDate] = useState<string>(""); 
   const [filename, setFilename] = useState<string>("")
   const [creator, setCreator] = useState<string>("")
-  const [img, setImg] = useState<string | null>(null)
+  const [img, setImg] = useState<string>("")
   const [filteredItems, setFilteredItems] = useState<ItemDownload[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [form] = Form.useForm();
 
   const handleImageChange = (e:ChangeEvent<HTMLInputElement>) => {
@@ -61,8 +62,6 @@ const LayoutPage: React.FC = () => {
     handleCancel();
   }
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -84,12 +83,19 @@ const LayoutPage: React.FC = () => {
     setData(newData);
   };
 
-  const onUpdate = (id:number, updateItems:Partial<ItemDownload>) => {
-    const modifyItem = data.map((item) =>{
-      if(item.id === id) {return {...item, ...updateItems}}
-      return item;
-    });
-    setData(modifyItem);
+  
+
+  const onUpdate = (id:number, updateItems:any) => {
+
+    setFilename(updateItems.filename)
+    setCreator(updateItems.creator)
+    setDate(updateItems.downloadDate)
+    setImg(updateItems.image)
+    // const modifyItem = data.map((item) =>{
+    //   if(item.id === id) {return {...item, ...updateItems}}
+    //   return item;
+    // });
+    // setData(modifyItem);
   };
   
   const handleSearch = (searchTerm: string) => {
@@ -155,7 +161,7 @@ const LayoutPage: React.FC = () => {
             name="image"
             rules={[{ required: true, message: "Please select image" }]}
           >
-            <Input type="file"  onChange={handleImageChange}/>
+            <Input type="file" value={img}  onChange={handleImageChange}/>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 16, span: 8 }}>
