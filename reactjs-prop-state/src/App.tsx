@@ -29,8 +29,8 @@ export default function App() {
     //<FormHook/>
     //<UploadImage/>
   // <CrudChrome/>
-   //<DragDrop/>
+   <DragDrop/>
    //<MyComponent/>
-   <HomePage/>
+  // <HomePage/>
   )
 }
