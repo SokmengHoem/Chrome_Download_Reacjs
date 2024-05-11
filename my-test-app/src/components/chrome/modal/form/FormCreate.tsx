@@ -1,38 +1,28 @@
-
 import { ChangeEvent, useEffect, useState } from "react";
-import { IPropertiesCard } from "../../HomePage";
 import { MdClear } from "react-icons/md";
+import { useChrome } from "../../../../contexts/ChromeContext";
+import { IPropertiesCard } from "../../../../@types/@type.chrome";
 
-interface Props {
-  filename: string,
-  creator: string,
-  image?: string,
-  showPopup: boolean;
-  buttonIcon:boolean;
-  handleFilenameChange:(value: string) => void;
-  handleCreatorChange:(value: string) => void;
-  handleImageChange:(value: string) => void;
-  onClickClosePop: (isPopup: boolean) => void;
-  onSubmit: ( formData: IPropertiesCard) => void;
-}
-let nextId:number = 1;
 
-function FormCreate({ 
-  showPopup, 
-  onClickClosePop, 
-  onSubmit,
-  filename,
-  creator,
-  image,
-  buttonIcon,
-  handleFilenameChange,
-  handleCreatorChange,
-  handleImageChange,
-}: Props) {
+let nextId: number = 1;
 
+function FormCreate() {
+  const {
+    showPopup,
+    buttonIcon,
+    filename,
+    creator,
+    image,
+    handleShowPopup,
+    handleFilenameChange,
+    handleCreatorChange,
+    handleImageChange,
+    handleSubmit,
+  } = useChrome();
   const [shouldRender, setShouldRender] = useState(showPopup);
-  
+ 
   useEffect(() => {
+   
     if (showPopup) {
       setShouldRender(true);
     } else {
@@ -44,14 +34,16 @@ function FormCreate({
     }
   }, [showPopup]);
 
-  const onCancel = () => {
-    handleFilenameChange("");
-    handleCreatorChange("");
-    handleImageChange("");
-    onClickClosePop(false);
+  
+  const handleCancle = () => {
+    handleFilenameChange("")
+    handleCreatorChange("")
+    handleImageChange("")
+    handleShowPopup(false);
   };
 
-  const handleImage = (e:ChangeEvent<HTMLInputElement>) => {
+
+  const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -64,21 +56,18 @@ function FormCreate({
     }
   };
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const onHandleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(creator.length < 3){
-      alert("Creator must be at least 3 characters long");
-      return;
-    }
-    const newFormData: IPropertiesCard = {
+    const newItem:IPropertiesCard={
       id: nextId++,
       filename,
       creator,
-      image
-    };
-    onSubmit(newFormData);
-    onCancel()
+      image,
+    }
+    handleSubmit(newItem);
+    handleCancle();
   };
+
   const handleRemoveImg = () => {
     handleImageChange("");
   }
@@ -90,18 +79,20 @@ function FormCreate({
       } transition-opacity duration-300`}
     >
       <div className=" flex flex-col gap-7 bg-blue-300 px-10 py-10 rounded-xl shadow-2xl">
-        <div className=" text-2xl font-bold text-center">{buttonIcon ? "Update Card Download":"Creat Card Download" }</div>
+        <div className=" text-2xl font-bold text-center">
+          {buttonIcon ? "Update Card Download" : "Creat Card Download"}
+        </div>
         <div>
-          <form  onSubmit={handleSubmit} className=" flex flex-col gap-4">
+          <form onSubmit={onHandleSubmit} className=" flex flex-col gap-4">
             <div className=" flex justify-between items-center">
               <label htmlFor="filename" className=" font-semibold mr-22">
                 Filename
               </label>
               <input
                 type="text"
-                id="filename"
+                name="filename"
                 value={filename}
-                onChange={(e) => handleFilenameChange(e.target.value)}
+                onChange={(e)=> handleFilenameChange(e.target.value)}
                 required
                 className=" w-72 px-2 py-2 rounded-lg bg-slate-200 outline-blue-700"
               />
@@ -111,10 +102,10 @@ function FormCreate({
                 Creator
               </label>
               <input
-               type="text"
-               id="creator"
-               value={creator}
-               onChange={(e) => handleCreatorChange(e.target.value)}
+                type="text"
+                name="creator"
+                value={creator}
+                onChange={(e)=>handleCreatorChange(e.target.value)}
                 required
                 className=" w-72 px-2 py-2 rounded-lg bg-slate-200 outline-blue-700"
               />
@@ -129,7 +120,7 @@ function FormCreate({
                 id="image"
                 className=" w-72 px-2 py-2 rounded-lg bg-slate-200 outline-blue-700"
               />
-                <div className=" relative">
+              <div className=" relative">
                 <img src={image} alt="Uploaded" className="w-18 h-16 mt-9 ml-8" />
                 <div className=" absolute -top-1 left-24">
                   <MdClear
@@ -142,7 +133,7 @@ function FormCreate({
             </div>
             <div className=" flex justify-end">
               <button
-                onClick={onCancel}
+                onClick={handleCancle}
                 className="block bg-rose-500 px-6 py-2 rounded-xl text-white font-semibold mr-3"
               >
                 Cancel
@@ -161,4 +152,4 @@ function FormCreate({
   ) : null;
 }
 
-export default FormCreate;
+export default FormCreate
